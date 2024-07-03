@@ -1,8 +1,9 @@
 import sys
+import argparse
 
-
-def sort_on(dict):
-    return dict.values()
+parser = argparse.ArgumentParser()
+parser.add_argument("path")
+args = parser.parse_args()
 
 
 def get_text(path) -> str:
@@ -46,8 +47,12 @@ def report(path) -> None:
 
 
 def main() -> int:
-    path = "books/frankenstein.txt"
-    report(path)
+    try:
+        report(args.path)
+    except FileNotFoundError:
+        print(f"404: {args.path} doesn't seem to exist")
+    except Exception:
+        parser.print_help()
     return 0
 
 
